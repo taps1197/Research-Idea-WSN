@@ -39,3 +39,34 @@ def mutation(offspring_crossover):
         random_value = numpy.random.uniform(-1.0, 1.0, 1)
         offspring_crossover[idx, 4] = offspring_crossover[idx, 4] + random_value
     return offspring_crossover
+
+
+def fitness(list1):
+    s = len(list1)
+    count = 0
+    alpha = 0.00000006
+    beta  = 0.000000045
+    gamma = 0.000000135 
+    for i in list1:
+        if i is 1:
+            count+= 1
+    c=count
+    t=0
+    sum =0
+    for i in range(s):
+        t= t + i +1
+        if list1[i] is 1:
+            sum = sum + i + 1  #i+1 is distance from sink to relay node
+    
+    k=sum/t
+    fitness =  alpha* abs(s-c) - beta*k
+    
+    return fitness
+    
+
+
+
+    
+
+
+
