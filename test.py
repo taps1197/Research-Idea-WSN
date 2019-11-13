@@ -22,6 +22,7 @@ for i in range(0,N):
     for j in range(s):
         list = random.sample(range(0,N),s)
 
+
     for k in range(0,N):
         for l in list:
             if l is k:
@@ -59,24 +60,33 @@ for k in range(0,N):
         print("Generation : ", generation)
         # Measing the fitness of each chromosome in the population.
         # fitness = ga.cal_pop_fitness(equation_inputs, new_population)
-        fitness = ga.fitness(equation_inputs)
-
-
+        print("fit hu mi")
+        print("input :: ")
+        print(equation_inputs)
+        fitness_val = ga.fitness_test(equation_inputs)
+        print("bilkul fit")
+        
         # Selecting the best parents in the population for mating.
-        parents = ga.select_mating_pool(new_population, fitness, 
+        print("new pop::")
+        print(new_population)
+        print("FIT hi boss")
+        print(fitness_val)
+        print("prtents")
+        print(num_parents_mating)
+        parents = ga.select_mating_pool(new_population, fitness_val, 
                                         num_parents_mating)
-
+        print("mating ho gyi :D")
         # Generating next generation using crossover.
         offspring_crossover = ga.crossover(parents,
                                         offspring_size=(pop_size[0]-parents.shape[0], num_weights))
-
+        print("affair chl rha hai :< ")
         # Adding some variations to the offsrping using mutation.
         offspring_mutation = ga.mutation(offspring_crossover)
-
+        print("kauskhiki said badhai ho:: twins")
         # Creating the new population based on the parents and offspring.
         new_population[0:parents.shape[0], :] = parents
         new_population[parents.shape[0]:, :] = offspring_mutation
-
+        
         #print 
         # The best result in the current iteration.
         print("Best result : ", numpy.max(numpy.sum(new_population*equation_inputs, axis=1)))
@@ -84,9 +94,9 @@ for k in range(0,N):
     # Getting the best solution after iterating finishing all generations.
     #At first, the fitness is calculated for each solution in the final generation.
     # fitness = ga.cal_pop_fitness(equation_inputs, new_population)
-    fitness = ga.fitness(equation_inputs)    
+    fitness_val = ga.fitness_test(equation_inputs)    
     #  Then return the index of that solution corresponding to the best fitness.
-    best_match_idx = numpy.where(fitness == numpy.max(fitness))
+    best_match_idx = numpy.where(fitness_val == numpy.max(fitness_val))
 
     print("Best solution : ", new_population[best_match_idx, :])
-    print("Best solution fitness : ", fitness[best_match_idx])
+   # print("Best solution fitness : ", fitness[best_match_idx])

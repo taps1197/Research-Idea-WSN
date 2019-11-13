@@ -1,19 +1,23 @@
 import numpy
 
-def cal_pop_fitness(equation_inputs, pop):
-    # Calculating the fitness value of each solution in the current population.
-    # The fitness function caulcuates the sum of products between each input and its corresponding weight.
-    fitness = numpy.sum(pop*equation_inputs, axis=1)
-    return fitness
+# def cal_pop_fitness(equation_inputs, pop):
+#     # Calculating the fitness value of each solution in the current population.
+#     # The fitness function caulcuates the sum of products between each input and its corresponding weight.
+#     fitness = numpy.sum(pop*equation_inputs, axis=1)
+#     return fitness
 
-def select_mating_pool(pop, fitness, num_parents):
+def select_mating_pool(pop, fitnes, num_parents):
     # Selecting the best individuals in the current generation as parents for producing the offspring of the next generation.
     parents = numpy.empty((num_parents, pop.shape[1]))
     for parent_num in range(num_parents):
-        max_fitness_idx = numpy.where(fitness == numpy.max(fitness))
+        max_fitness_idx = numpy.where(fitnes == numpy.max(fitnes))
         max_fitness_idx = max_fitness_idx[0][0]
+        print("max_fitness_idx:")
+        print(max_fitness_idx)
         parents[parent_num, :] = pop[max_fitness_idx, :]
-        fitness[max_fitness_idx] = -99999999999
+        print(parents)
+        print(fitnes[max_fitness_idx])
+        fitnes[max_fitness_idx] = 0
     return parents
 
 def crossover(parents, offspring_size):
@@ -41,32 +45,31 @@ def mutation(offspring_crossover):
     return offspring_crossover
 
 
-def fitness(list1):
+def fitness_test(list1):
     s = len(list1)
     count = 0
     alpha = 0.00000006
     beta  = 0.000000045
     gamma = 0.000000135 
+    #to count relay nodes
     for i in list1:
         if i is 1:
             count+= 1
-    c=count
+            
+    print("c::", count)
+    c=count #c= total no. of relay nodes
     t=0
     sum =0
+    #count all the nodes
     for i in range(s):
         t= t + i +1
         if list1[i] is 1:
             sum = sum + i + 1  #i+1 is distance from sink to relay node
-    
-    k=sum/t
-    fitness =  alpha* abs(s-c) - beta*k
-    
-    return fitness
-    
-
-
-
-    
-
-
-
+    print("t::",t)
+    print("sum::",sum)
+    k=sum/t  #summation part
+    print("k::",k)
+    fit =  (alpha* abs(s-c)) - (beta*k)
+    print("fitness::")
+    print(fit)
+    return fit
